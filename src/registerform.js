@@ -1,14 +1,22 @@
 import React from 'react';
 import {reduxForm, Field} from 'redux-form';
+import {required, notEmpty, minLength, isNumber} from './validators';
+import Input from './input';
 
 class RegisterForm extends React.Component {
   render () {
     return (
       <div>
        <h1>Report a problem with your delivery</h1>
-      <form>
-        <label htmlFor='tracking number'>Tracking number</label>
-        <Field component='input' type='text' name='tracking number' id ='tracking-number'/>
+      <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        <Field 
+        component={Input} 
+        label = 'tracking number'
+        type='text' 
+        name='tracking number' 
+        id ='tracking-number'
+        validate={[required, notEmpty, minLength, isNumber]}
+        />
         <div>
         <label htmlFor='issue'>What is your issue?</label>
         <Field component='select' name='issue' id='issue'>
@@ -20,7 +28,7 @@ class RegisterForm extends React.Component {
           </Field>
         </div>
         <div>  
-          <label for='details'> Give more details(optional)</label>
+          <label htmlFor='details'> Give more details(optional)</label>
           <div>
           <textarea rows='4' cols='40' name='details' id='details'></textarea>
           </div>
